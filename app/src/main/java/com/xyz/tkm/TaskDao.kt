@@ -5,16 +5,22 @@ import com.xyz.tkm.model.Task
 
 @Dao
 interface TaskDao {
+    @Query("SELECT * FROM tasks ORDER BY Id DESC")
+    fun getAllTasks(): LiveData<List<Task>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTask(task: Task)
+    suspend fun insert(task: Task): Long
 
     @Update
-    suspend fun updateTask(task: Task)
+    suspend fun update(task: Task)
 
     @Delete
-    suspend fun deleteTask(task: Task)
+    suspend fun delete(task: Task)
 
-    @Query("SELECT * FROM tasks ORDER BY id DESC")
-    fun getAllTasks(): LiveData<List<Task>>
+    @Query("DELETE FROM tasks")
+    suspend fun clearAllTasks()
+
+
+    @Query("SELECT * FROM tasks WHERE firebaseId = :fid LIMIT 1")
+    suspend fun getByFirebaseId(fid: String): Task?
 }

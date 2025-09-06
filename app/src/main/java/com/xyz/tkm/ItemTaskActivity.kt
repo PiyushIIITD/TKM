@@ -15,6 +15,7 @@ import com.xyz.tkm.adapter.TaskAdapter
 import com.xyz.tkm.data.TaskDatabase
 import com.xyz.tkm.model.Task
 import com.xyz.tkm.viewmodel.TaskViewModel
+import com.xyz.tkm.data.TaskDao
 import kotlin.jvm.java
 
 class ItemTaskActivity : AppCompatActivity() {
@@ -44,7 +45,7 @@ class ItemTaskActivity : AppCompatActivity() {
                 Toast.makeText(this, "Deleted: ${task.title}", Toast.LENGTH_SHORT).show()
             },
             onStatusChange = { updatedTask ->
-                taskViewModel.insert(updatedTask) // ✅ Save status in DB
+                taskViewModel.updateTask(updatedTask)
             }
         )
             recyclerView.adapter = taskAdapter
@@ -67,8 +68,8 @@ class ItemTaskActivity : AppCompatActivity() {
             val title = titleInput.text.toString().trim()
             val desc = descInput.text.toString().trim()
             if (title.isNotEmpty()) {
-                val updatedTask = Task(task.id, title, desc)
-                taskViewModel.insert(updatedTask)
+                val updatedTask = Task(task.Id, title, desc)
+                taskViewModel.addTask(updatedTask)
                 Toast.makeText(this, "Task Updated", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
             } else {

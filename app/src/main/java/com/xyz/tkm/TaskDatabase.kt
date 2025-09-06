@@ -9,7 +9,6 @@ import com.xyz.tkm.model.Task
 abstract class TaskDatabase : RoomDatabase() {
 
     abstract fun taskDao(): TaskDao
-
     companion object {
         @Volatile
         private var INSTANCE: TaskDatabase? = null
@@ -19,7 +18,7 @@ abstract class TaskDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     TaskDatabase::class.java,
-                    "task_database"
+                    "task_db"
                 ).build()
                 INSTANCE = instance
                 instance

@@ -47,19 +47,16 @@ class HomeActivity : AppCompatActivity() {
                 Toast.makeText(this, "Deleted: ${task.title}", Toast.LENGTH_SHORT).show()
             },
             onStatusChange = { updatedTask ->
-                taskViewModel.insert(updatedTask) // ✅ Save status in DB
+                taskViewModel.updateTask(updatedTask)
             }
         )
 
         recyclerView.adapter = adapter
 
-        // Observe tasks from DB
         taskViewModel.allTasks.observe(this) { tasks ->
-//            allTasks = tasks.toMutableList()
             adapter.submitList(tasks)
         }
 
-        // Search functionality
         searchBox.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -69,7 +66,6 @@ class HomeActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {}
         })
 
-        // Add Task Button
         addTaskBtn.setOnClickListener { showAddTaskDialog() }
     }
 
@@ -84,7 +80,7 @@ class HomeActivity : AppCompatActivity() {
             val title = titleInput.text.toString().trim()
             val desc = descInput.text.toString().trim()
             if (title.isNotEmpty()) {
-                taskViewModel.insert(Task(0, title, desc))
+                taskViewModel.addTask(Task(0, title, desc))
                 Toast.makeText(this, "Task Added", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
             } else {
@@ -110,8 +106,8 @@ class HomeActivity : AppCompatActivity() {
             val title = titleInput.text.toString().trim()
             val desc = descInput.text.toString().trim()
             if (title.isNotEmpty()) {
-                val updatedTask = Task(task.id, title, desc)
-                taskViewModel.insert(updatedTask)
+                val updatedTask = Task(task.Id, title, desc)
+                taskViewModel.addTask(updatedTask)
                 Toast.makeText(this, "Task Updated", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
             } else {

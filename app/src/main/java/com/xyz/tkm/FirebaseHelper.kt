@@ -8,10 +8,10 @@ object FirebaseHelper {
     private val collection = db.collection("tasks")
 
     fun syncTask(task: Task) {
-        collection.document(task.id.toString()).set(task)
+        collection.document(task.Id.toString()).set(task)
     }
 
-    fun deleteTask(taskId: Int) {
+    fun delete(taskId: Int) {
         collection.document(taskId.toString()).delete()
     }
 

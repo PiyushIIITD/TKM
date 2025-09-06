@@ -5,9 +5,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "tasks")
 data class Task(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val title: String,
-    val description: String,
-    var status: String = "Pending",  // Pending, In Progress, Completed
-    val imageRes: Int? = null       // Optional icon for task card
+    val Id: Int = 0,
+    var firebaseId: String = "",
+    var title: String = "",
+    var description: String = "",
+    var status: String = "Pending",
+    var synced: Boolean = false
 )

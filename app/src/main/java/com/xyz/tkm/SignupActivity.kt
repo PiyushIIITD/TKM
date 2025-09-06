@@ -26,8 +26,6 @@ class SignupActivity : AppCompatActivity() {
         signUpButton = findViewById(R.id.signUpButton)
         loginLink = findViewById(R.id.loginLink)
         backButton = findViewById(R.id.backButton)
-
-        // Handle Sign Up button
         signUpButton.setOnClickListener {
             val email = emailInput.text.toString().trim()
             val password = passwordInput.text.toString().trim()
@@ -43,20 +41,17 @@ class SignupActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // ✅ Account created → Go to TasksActivity
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        // Handle "Already have an account? Login"
         loginLink.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        // Back button navigation
         backButton.setOnClickListener {
             finish()
         }

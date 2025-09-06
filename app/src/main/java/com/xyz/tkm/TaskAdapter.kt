@@ -52,8 +52,6 @@ class TaskAdapter(
         return TaskViewHolder(view)
     }
 
-    override fun getItemCount() = taskList.size
-
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = taskList[position]
         holder.taskTitle.text = task.title
@@ -64,22 +62,18 @@ class TaskAdapter(
             else -> R.color.yellow
         }
         holder.statusBtn.setColorFilter(ContextCompat.getColor(holder.itemView.context, colorRes))
-
-        // ✅ Edit task
         holder.editTask.setOnClickListener {
             onEditClick(task)
         }
-
-        // ✅ Delete task
         holder.deleteTask.setOnClickListener {
             onDeleteClick(task)
         }
-
-        // ✅ View task details or status
         holder.statusBtn.setOnClickListener { view->
         showStatusMenu(view , task)
         }
     }
+
+    override fun getItemCount() = taskList.size
 
     private fun showStatusMenu(view: View, task: Task) {
         val popup = PopupMenu(view.context, view)
@@ -99,6 +93,7 @@ class TaskAdapter(
     }
 
     fun submitList(tasks: List<Task>) {
+        taskList.clear()
         taskList = tasks.toMutableList()
 //        taskList.addAll(tasks)
         notifyDataSetChanged()
